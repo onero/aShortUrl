@@ -42,9 +42,9 @@ app.get('/:id', async (req, res, next) => {
     if (url) {
       res.redurect(url.url);
     }
-    res.redirect('/?error=${slug} not found');
+    res.redirect(`/?error=${slug} not found`);
   } catch (error) {
-    res.redirect('/?error=Link not found');
+    res.redirect(`/?error=Link not found`);
   }
 });
 

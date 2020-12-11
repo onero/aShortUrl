@@ -28,8 +28,17 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/:id', (req, res) => {
-  // TODO ALH: Redirect to url
+app.get('/:id', (req, res, next) => {
+  const { id: slug } = req.params;
+  try {
+    // TODO ALH: Lookup url!
+    const url = 'https://www.google.com'
+    if (url) {
+      res.redirect(url);
+    }
+  } catch (error) {
+    next(error)
+  }
 });
 
 app.post('/:url', async (req, res, next) => {

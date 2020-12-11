@@ -10,7 +10,7 @@ require('dotenv').config();
 
 const db = monk(process.env.MONGODB_URI);
 const urls = db.get('urls');
-urls.createIndex('name');
+urls.createIndex('slug');
 
 const app = express();
 
@@ -35,16 +35,16 @@ app.get('/', (req, res) => {
   });
 });
 
-app.get('/:id', (req, res, next) => {
+app.get('/:id', async (req, res, next) => {
   const { id: slug } = req.params;
   try {
-    // TODO ALH: Lookup url!
-    const url = 'https://www.google.com'
+    const url = await urls.findOne({ slug });
     if (url) {
-      res.redirect(url);
+      res.redurect(url.url);
     }
+    res.redirect('/?error=${slug} not found');
   } catch (error) {
-    next(error)
+    res.redirect('/?error=Link not found');
   }
 });
 

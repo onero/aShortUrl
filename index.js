@@ -74,7 +74,7 @@ app.use((error, req, res, next) => {
   }
   res.json({
     message: error.message,
-    stack: process.env.NODE_ENV === 'production' ? 'UhUh!' : error.stack,
+    stack: process.env.NODE_ENV === 'production' ? '🍰' : error.stack,
   });
 });
 

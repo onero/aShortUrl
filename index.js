@@ -7,10 +7,10 @@ const monk = require('monk');
 const { nanoid } = require('nanoid');
 
 require('dotenv').config();
-const urls = db.get('urls');
-urls.createIndex('name');
 
 const db = monk(process.env.MONGO_URI);
+const urls = db.get('urls');
+urls.createIndex('name');
 
 const app = express();
 

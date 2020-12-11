@@ -3,7 +3,14 @@ const cors = require('cors');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const yup = require('yup');
+const monk = require('monk');
 const { nanoid } = require('nanoid');
+
+require('dotenv').config();
+const urls = db.get('urls');
+urls.createIndex('name');
+
+const db = monk(process.env.MONGO_URI);
 
 const app = express();
 
@@ -51,12 +58,20 @@ app.post('/:url', async (req, res, next) => {
     });
     if (!slug) {
       slug = nanoid(5);
+    } else {
+      const existing = await urls.findOne({ slug });
+      if (existing) {
+        throw new Error('Slug is in use. 🍔');
+      }
     }
     slug = slug.toLowerCase();
-    res.json({
+    const secret = nanoid(10).toLowerCase();
+    const newUrl = {
+      url,
       slug,
-      url
-    });
+    }
+    const created = await urls.insert(newUrl);
+    res.json(created);
   } catch (error) {
     next(error);
   }

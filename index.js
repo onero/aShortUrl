@@ -29,26 +29,31 @@ const schema = yup.object().shape({
   url: yup.string().trim().url().required(),
 });
 
-app.get('/', (req, res) => {
+app.get('/', () => {
   res.json({
     message: 'a Url Shortener - Shortens urls for your convenience!',
   });
 });
 
 app.get('/:id', async (req, res, next) => {
+  console.log('Get url by id endpoint hit!');
+
   const { id: slug } = req.params;
   try {
     const url = await urls.findOne({ slug });
     if (url) {
-      res.redurect(url.url);
+      res.redirect(url.url);
+    } else {
+      res.redirect(`/?error=${slug} not found`);
     }
-    res.redirect(`/?error=${slug} not found`);
   } catch (error) {
-    res.redirect(`/?error=Link not found`);
+    next(error);
   }
 });
 
 app.post('/:url', async (req, res, next) => {
+  console.log('Create new url endpoint hit!');
+
   let { slug, url } = req.body;
 
   try {
@@ -56,6 +61,7 @@ app.post('/:url', async (req, res, next) => {
       slug,
       url,
     });
+
     if (!slug) {
       slug = nanoid(5);
     } else {
@@ -64,8 +70,8 @@ app.post('/:url', async (req, res, next) => {
         throw new Error('Slug is in use. 🍔');
       }
     }
+
     slug = slug.toLowerCase();
-    const secret = nanoid(10).toLowerCase();
     const newUrl = {
       url,
       slug,
@@ -77,15 +83,12 @@ app.post('/:url', async (req, res, next) => {
   }
 });
 
-app.get('/url/:id', (req, res) => {
-  // TODO ALH: Get url information
-});
-
+const HTTP_SERVER_ERROR = 500;
 app.use((error, req, res, next) => {
   if (error.status) {
     res.status(error.status);
   } else {
-    res.status(500);
+    res.status(HTTP_SERVER_ERROR);
   }
   res.json({
     message: error.message,

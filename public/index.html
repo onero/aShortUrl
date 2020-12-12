@@ -9,22 +9,36 @@
   </head>
   <body>
     <header>
-      <h1>aShortUrl -Short urls for your convenience</h1>
+      <h1>aShortUrl - Short urls for your convenience</h1>
     </header>
 
     <main id="app">
-      <form @submit.prevent="createUrl()">
-        <label for="url">Url</label>
-        <input v-model="url" name="url" id="url">
+      <div class="slug-box">
+        <h2>Create your slug</h2>
+        <form @submit.prevent="createUrl()">
+          <div class="user-box">
+            <input v-model="url" name="url" id="url" type="text" required="">
+            <label>Url - required</label>
+          </div>
 
-        <label for="slug">Slug</label>
-        <input v-model="slug" name="slug" id="slug">
+          <div class="user-box">
+            <input v-model="slug" name="slug" id="slug" type="text">
+            <label>Slug - optional</label>
+          </div>
+          <button type="submit">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Create
+          </button>
+        </form>
+          <h3 class="slug-created" v-if="created && created.slug">Congratulations! <br> Your slug was created <br> <a :href="`https://a-short-url.herokuapp.com/${created.slug}`">here</a></h3>
 
-        <button type="submit">Create</button>
-      </form>
-      <h3 v-if="created && created.slug">Congratulations! Your slug was created <a :href="`https://a-short-url.herokuapp.com/${created.slug}`">here</a></h3>
+          <h3 class="slug-already-created" v-if="created && !created.slug">Sorry slug was already created. <br> <i class="visit-here">You can visit it:</i> <br> <a :href="`https://a-short-url.herokuapp.com/${slug}`">here</a></h3>
 
-      <h3 v-if="created && !created.slug">Sorry slug was already created. You can visit it: <a :href="`https://a-short-url.herokuapp.com/${slug}`">here</a></h3>
+          <h3 v-if="errorMessage">An error occured: <br> <strong class="error"><i>{{ errorMessage }}</i></strong></h3>
+      </div>
     </main>
 
     <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>

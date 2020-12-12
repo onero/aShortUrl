@@ -4,9 +4,13 @@ const app = new Vue({
     url: '',
     slug: '',
     created: null,
+    errorMessage: '',
   },
   methods: {
     async createUrl() {
+      this.errorMessage = '';
+      this.created = '';
+
       const response = await fetch('/url', {
         method: 'POST',
         headers: {
@@ -21,7 +25,17 @@ const app = new Vue({
             url: this.url
           })
       });
-      this.created = await response.json();
+      const result = await response.json();
+      if (result.message) {
+        const slugAlreadyUsedError = result.message.includes('use');
+        if (slugAlreadyUsedError) {
+          this.created = result;
+        } else {
+          this.errorMessage = result.message;
+        }
+      } else {
+        this.created = result;
+      }
     }
   }
 })

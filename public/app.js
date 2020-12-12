@@ -2,7 +2,8 @@ const app = new Vue({
   el: '#app',
   data: {
     url: '',
-    slug: ''
+    slug: '',
+    created: null,
   },
   methods: {
     async createUrl() {

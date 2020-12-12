@@ -24,7 +24,7 @@
       </form>
       <h3 v-if="created && created.slug">Congratulations! Your slug was created <a :href="`https://a-short-url.herokuapp.com/${created.slug}`">here</a></h3>
 
-      <h3 v-if="created && !created.slug">Sorry slug was already created, please try another!</h3>
+      <h3 v-if="created && !created.slug">Sorry slug was already created. You can visit it: <a :href="`https://a-short-url.herokuapp.com/${slug}`">here</a></h3>
     </main>
 
     <script src="https://unpkg.com/vue@2.6.12/dist/vue.min.js"></script>

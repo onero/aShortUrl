@@ -12,10 +12,14 @@ const app = new Vue({
         headers: {
           'content-type': 'application/json'
         },
-        body: JSON.stringify({
-          url: this.url,
-          slug: this.slug
-        })
+        body: this.slug.length > 0 ?
+          JSON.stringify({
+            url: this.url,
+            slug: this.slug
+          }) :
+          JSON.stringify({
+            url: this.url
+          })
       });
       this.created = await response.json();
     }

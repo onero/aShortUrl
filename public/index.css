@@ -53,6 +53,7 @@ body {
   outline: none;
   background: transparent;
 }
+
 .slug-box .user-box label {
   position: absolute;
   top:0;
@@ -193,4 +194,24 @@ button span {
 
 .error {
   color:red;
+}
+
+@media (min-width: 320px) and (max-width: 999px) {
+
+  body {
+    width: 100% !important;
+    font-size: 1em !important;
+  }
+
+  .title {
+    visibility: hidden;
+  }
+
+  .slug-box {
+    position: relative;
+    width: 300px;
+    padding: 40px;
+    transform: translate(-50%);
+    background: rgba(0,0,0,.5);
+  }
 }

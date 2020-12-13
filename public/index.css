@@ -215,3 +215,10 @@ button span {
     background: rgba(0,0,0,.5);
   }
 }
+
+.copy {
+  color: #03e9f4;
+   text-align: center;
+   display: inline-block;
+   width: 100%;
+}

@@ -36,6 +36,15 @@ const app = new Vue({
       } else {
         this.created = result;
       }
+    },
+    copyToClipboard() {
+      const textToCopy = `http://a-short-url.herokuapp.com/${this.slug ? this.slug : this.created.slug}`;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        window.alert('Link has been copied to your clipboard!');
+      }, () => {
+        console.log('NOPE!');
+      });
     }
   }
-})
+});

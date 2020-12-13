@@ -6,6 +6,8 @@
     <title>aShortUrl</title>
     <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="https://ez-css.now.sh" />
+    <link rel="stylesheet" href="https://unpkg.com/components-font-awesome@5.9.0/css/all.min.css"></link>
+
   </head>
   <body>
     <header>
@@ -33,9 +35,11 @@
             Create
           </button>
         </form>
-          <h3 class="slug-created" v-if="created && created.slug">Congratulations! <br> Your slug was created <br> <a :href="`https://a-short-url.herokuapp.com/${created.slug}`">here</a></h3>
+          <h3 class="slug-created" v-if="created && created.slug">Congratulations! <br> Your slug was created <br> <a :href="`https://a-short-url.herokuapp.com/${created.slug}`">{{created.slug}}</a></h3>
 
-          <h3 class="slug-already-created" v-if="created && !created.slug">Sorry slug was already created. <br> <i class="visit-here">You can visit it:</i> <br> <a :href="`https://a-short-url.herokuapp.com/${slug}`">here</a></h3>
+          <h3 class="slug-already-created" v-if="created && !created.slug">Sorry slug was already created. <br> <i class="visit-here">You can visit it:</i> <br> <a :href="`https://a-short-url.herokuapp.com/${slug}`">{{slug}}</a></h3>
+
+          <i class="far fa-clipboard copy" v-if="created" v-on:click="copyToClipboard()"></i>
 
           <h3 v-if="errorMessage">An error occured: <br> <strong class="error"><i>{{ errorMessage }}</i></strong></h3>
       </div>

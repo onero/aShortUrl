@@ -1,4 +1,4 @@
-# aShortUrl
+# [aShortUrl](https://a-short-url.herokuapp.com/ashorturl)
 
 Creates shortened urls for your convenience!
 

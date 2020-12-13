@@ -1,14 +1,41 @@
 version: '3'
+
 services:
+  express-app:
+    image: ashorturl-express-app
+    container_name: express-app
+    build: .
+    volumes:
+      - ./src:/express-app/src
+      - ./public:/express-app/public
+    env_file:
+      - .env
+    environment:
+      - MONGODB_URI=${MONGODB_URI_DOCKER}
+    ports:
+      - "1337:1337"
+    networks:
+      - backend
+    depends_on:
+      - database
+
   database:
     image: 'mongo'
     container_name: 'mongoDB'
-    environment:
-      - MONGO_INITDB_DATABASE=urls
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
     volumes:
       - ./DB/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - ./DB/mongo-volume:/data/db
+    env_file:
+      - .env
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     ports:
-      - '27017-27019:27017-27019'
+      - '27017:27017'
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

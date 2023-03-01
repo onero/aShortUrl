@@ -2,7 +2,7 @@
 
 Creates shortened urls for your convenience!
 
-The project is deployed live [here](http://a-short-url.herokuapp.com)
+The project is deployed live [HERE](http://a-short-url.herokuapp.com)
 
 ## The components are
 
